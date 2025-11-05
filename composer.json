@@ -1,0 +1,14 @@
+{
+    "name": "criarcurriculo/app",
+    "description": "Assistente guiado para criação de currículos profissionais",
+    "require": {
+        "php": ">=8.0",
+        "dompdf/dompdf": "^2.0",
+        "phpmailer/phpmailer": "^6.9"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    }
+}

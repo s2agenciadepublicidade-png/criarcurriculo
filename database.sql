@@ -1,0 +1,32 @@
+CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name VARCHAR(120) NOT NULL,
+    email VARCHAR(180) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME
+);
+
+CREATE TABLE IF NOT EXISTS resumes (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    title VARCHAR(160) NOT NULL,
+    data_json TEXT NOT NULL,
+    template VARCHAR(40) DEFAULT 'classico',
+    color_scheme VARCHAR(40) DEFAULT 'azul',
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS password_resets (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    token VARCHAR(255) NOT NULL,
+    expires_at DATETIME NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE INDEX IF NOT EXISTS idx_resumes_user ON resumes(user_id);
+CREATE INDEX IF NOT EXISTS idx_password_resets_token ON password_resets(token);
